@@ -1,0 +1,89 @@
+1. Štruktúra projektu:
+/mysite - hlavný priečinok celého projektu
+- settings.py - nastavenia celého projektu (región, zaregistrovanie aplikácie, ...)
+- urls.py - router pre celý projekt
+
+/skola - priečinok aplikácie
+- models.py - definícia modelov (objektov) aplikácie a ich atribútov a metód, spojenie s databázou
+- views.py - controller, logika aplikácie, spracovanie dát, posielanie do výstupu (template)
+
+from django.shortcuts import render, HttpResponse
+from . models import * # naimportovanie všetkých modelov z models.py
+
+def index(request):
+    studenti = Student.objects.all()
+    ucitelia = Ucitel.objects.all()
+    triedy = Trieda.objects.all()
+    return render(request, "skola/index.html", {"studenti":studenti, "ucitelia":ucitelia, "triedy":triedy})
+
+def list_students(request):
+    studenti = Student.objects.all()
+    return render(request, "skola/index.html", {"studenti":studenti})
+
+- templates/skola/index.html - šablóna pre výstup tzn. zobrazenie údajov
+
+manage.py - správca projektu, súbor cez ktorý robíme s Djangom
+
+#!/usr/bin/env python
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
+
+
+def main():
+    """Run administrative tasks."""
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(sys.argv)
+
+
+if __name__ == '__main__':
+    main()
+
+
+db.sqlite3 - predvolená databáza (dá sa zmeniť v settings.py)
+
+2. Postup:
+- definícia modelov v models.py:
+
+from django.db import models
+
+class Student(models.Model):
+    meno = models.CharField(max_length=20) # textové pole
+    priezvisko = models.CharField(max_length=20)
+    trieda = models.CharField(max_legth=10)
+
+    def __str__(self):
+        return f"{self.meno} {self.priezvisko} {self.trieda}"
+
+    class Meta:
+        verbose_name = "Študent"
+        verbose_name_plural = "Študenti"
+        ordering = ["priezvisko"]
+
+- migrácia modelov do databázy:
+python manage.py makemigrations
+python manage.py migrate
+
+tieto príkazy musíme použiť vždy ak zmeníme niečo v models.py
+
+- registrácia aplikácie do admin rozhrania:
+súbor admins.py:
+
+from django.contrib import admin
+from .models import Student # naimportovanie modelu Student do admin.py
+
+admin.site.register(Student)
+
+- vytvorenie prvého superužívateľa:
+    python manage.py createsuperuser
+
+teplates\skola:
+
