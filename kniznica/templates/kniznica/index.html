@@ -1,0 +1,54 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="{% static 'kniznica/style.css' %}">
+    <title>Kniznica</title>
+</head>
+<body>
+    <div class="a">
+        <div>
+            <h1>Autori:</h1>
+            <ul>
+                {% for autor in autori%}
+                <li>{{autor}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <div>
+            <h1>Vydavatelia:</h1>
+            <ul>
+                {% for vydavatel in vydavatelia%}
+                <li>{{vydavatel}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <div>
+            <h1>Miesta:</h1>
+            <ul>
+                {% for miesto in miesta%}
+                <li>{{miesto}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+        <div>
+            <h1>Knihy:</h1>
+            <ul>
+                {% for kniha in knihy%}
+                <li>{{kniha}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="b">
+        <img src="{% static 'kniznica/books.png' %}" alt="skola">
+    </div>
+    
+</body>
+</html>

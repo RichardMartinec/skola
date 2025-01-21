@@ -22,6 +22,28 @@ def list_students(request):
 
 - templates/skola/index.html - šablóna pre výstup tzn. zobrazenie údajov
 
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="{% static 'skola/skola.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% if studenti %}
+    <h1>Studenti:</h1>
+    <ul>
+        {% for student in studenti%}
+        <li>{{student}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+</body>
+</html>
+
 manage.py - správca projektu, súbor cez ktorý robíme s Djangom
 
 #!/usr/bin/env python
@@ -59,6 +81,7 @@ class Student(models.Model):
     meno = models.CharField(max_length=20) # textové pole
     priezvisko = models.CharField(max_length=20)
     trieda = models.CharField(max_legth=10)
+    //miesto = models.ForeignKey(Miesto, on_delete=models.SET_NULL, null=True, blank=True) # ak je použitá premenná už predtým
 
     def __str__(self):
         return f"{self.meno} {self.priezvisko} {self.trieda}"
@@ -78,12 +101,13 @@ tieto príkazy musíme použiť vždy ak zmeníme niečo v models.py
 súbor admins.py:
 
 from django.contrib import admin
-from .models import Student # naimportovanie modelu Student do admin.py
+from .models import Student, Ucitel, Trieda # naimportovanie modelu Student do admin.py
 
 admin.site.register(Student)
+admin.site.register(Ucitel)
+admin.site.register(Trieda)
 
 - vytvorenie prvého superužívateľa:
     python manage.py createsuperuser
 
-teplates\skola:
 

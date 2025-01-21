@@ -63,6 +63,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('studenti/', views.list_students, name="list-student"),
 ]
 
     9. Template
