@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'skola/skola.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="a">
+        <div>
+            <h1>Studenti:</h1>
+            <ol>
+                {% for student in studenti %}
+                    <li>{{ student }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h1>Ucitelia:</h1>
+            <ol>
+                {% for ucitel in ucitelia %}
+                    <li>{{ ucitel }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h1>Triedy:</h1>
+            <ol>
+                {% for trieda in triedy %}
+                    <li>{{ trieda }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <div class="b">
+        <img src="{% static 'skola/skola.jpg' %}" alt="skola">
+    </div>
+</body>
+</html>

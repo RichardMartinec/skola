@@ -1,0 +1,50 @@
+1. Štruktúra projektu:
+/mysite - Hlavný priečinok projektu
+    settings.py - Nastavenia Django projektu (zaregistrovanie aplikácie)
+    urls.py - Router Django projektu
+
+/skola - Priečinok aplikácie
+    models.py - Definícia modelov (objektov) aplikácie a ich atribútov a metód, spojenie s databázou
+    views.py - Controller, logika aplikácie, spracovanie dát, posielanie do výstupu (template)
+    templates/skola/index.html - Šablóna pre výstup (zobrazenie údajov)
+
+manage.py - Správca projektu, súbor cez ktorý robíme s Django
+
+db.sqlite3 - Predvolená databáza Django (dá sa zmeniť v settings.py)
+
+2. Postup:
+    models.py - definícia modelov
+
+        from django.db import models
+
+        # Create your models here.
+
+        class Student(models.Model):
+            meno = models.CharField(max_length=20) # textové pole
+            priezvisko = models.CharField(max_length=20)
+            trieda = models.CharField(max_length=10)
+
+            def __str__(self):
+                return f"{self.meno} {self.priezvisko} {self.trieda}"
+
+
+    migrácia modelov do databázy
+        python manage.py makemigrations
+        python manage.py migrate
+
+            tito príkazy misíme použiť vždy, keď pridáme novú modelovú triedu
+
+
+    registrácia aplikácie do admin rozhrania:
+        súbor admin.py
+
+            from django.contrib import admin
+            from .models import Student
+
+            # Register your models here.
+
+            admin.site.register(Student)
+
+
+    vytvorenie prvého superužívateľa
+        python manage.py createsuperuser

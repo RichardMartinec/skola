@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'kniznica/index.css' %}">
+    <title>Vydavatelia</title>
+</head>
+<body>
+    <h1>Vydavatelia:</h1>
+    <ol>
+        {% for vydavatel in vydavatelia %}
+            <li>{{ vydavatel }}</li>
+        {% endfor %}
+    </ol>
+</body>
+</html>
